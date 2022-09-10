@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const QUERY_ME = gql`
   {
@@ -12,6 +12,15 @@ export const QUERY_ME = gql`
         image
         description
         title
+        link
+      }
+      savedEvents {
+        eventId
+        location
+        header
+        summary
+        lattitude
+        longitude
         link
       }
     }
