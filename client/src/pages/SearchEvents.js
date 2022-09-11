@@ -10,29 +10,29 @@ import {
 } from "react-bootstrap";
 
 import { useMutation } from "@apollo/client";
-import { SAVE_BOOK } from "../utils/mutations";
-import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
+import { SAVE_EVENT } from "../utils/mutations";
+import { saveEventIds, getSavedEventIds } from "../utils/localStorage";
 
 import Auth from "../utils/auth";
 
-const SearchBooks = () => {
+const SearchEvents = () => {
   // create state for holding returned google api data
-  const [searchedBooks, setSearchedBooks] = useState([]);
+  const [searchedEvents, setSearchedEvents] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState("");
 
-  // create state to hold saved bookId values
-  const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
+  // create state to hold saved eventId values
+  const [savedEventIds, setsavedEventIds] = useState(getSavedEventIds());
 
-  const [saveBook, { error }] = useMutation(SAVE_BOOK);
+  const [saveEvent, { error }] = useMutation(SAVE_EVENT);
 
-  // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
+  // set up useEffect hook to save `savedEventIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
-    return () => saveBookIds(savedBookIds);
+    return () => saveEventIds(savedEventIds);
   });
 
-  // create method to search for books and set state on form submit
+  // create method to search for events and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -42,7 +42,7 @@ const SearchBooks = () => {
 
     try {
       const response = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchInput}`
+        `https://www.googleapis.com/events/v1/volumes?q=${searchInput}`
       );
 
       if (!response.ok) {
@@ -51,25 +51,26 @@ const SearchBooks = () => {
 
       const { items } = await response.json();
 
-      const bookData = items.map((book) => ({
-        bookId: book.id,
-        authors: book.volumeInfo.authors || ["No author to display"],
-        title: book.volumeInfo.title,
-        description: book.volumeInfo.description,
-        image: book.volumeInfo.imageLinks?.thumbnail || "",
+      const eventData = items.map((event) => ({
+        eventId: event.id,
+        authors: event.volumeInfo.authors || ["No author to display"],
+        title: event.volumeInfo.title,
+        description: event.volumeInfo.description,
       }));
 
-      setSearchedBooks(bookData);
+      setSearchedEvents(eventData);
       setSearchInput("");
     } catch (err) {
       console.error(err);
     }
   };
 
-  // create function to handle saving a book to our database
-  const handleSaveBook = async (bookId) => {
-    // find the book in `searchedBooks` state by the matching id
-    const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+  // create function to handle saving a event to our database
+  const handleSaveEvent = async (eventId) => {
+    // find the event in `searchedEvents` state by the matching id
+    const eventToSave = searchedEvents.find(
+      (event) => event.eventId === eventId
+    );
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -79,11 +80,11 @@ const SearchBooks = () => {
     }
 
     try {
-      const { data } = await saveBook({
-        variables: { bookData: { ...bookToSave } },
+      const { eventData } = await saveEvent({
+        variables: { eventData: { ...eventToSave } },
       });
-      console.log(savedBookIds);
-      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+      console.log(savedEventIds);
+      setsavedEventIds([...savedEventIds, eventToSave.eventId]);
     } catch (err) {
       console.error(err);
     }
@@ -92,7 +93,7 @@ const SearchBooks = () => {
     <>
       <Jumbotron fluid className="text-light bg-dark">
         <Container>
-          <h1>Search for Countries!</h1>
+          <h1>Search for events!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Form.Row>
               <Col xs={12} md={8}>
@@ -102,7 +103,7 @@ const SearchBooks = () => {
                   onChange={(e) => setSearchInput(e.target.value)}
                   type="text"
                   size="lg"
-                  placeholder="Search for any country "
+                  placeholder="Search for any event "
                 />
               </Col>
               <Col xs={12} md={4}>
@@ -117,36 +118,38 @@ const SearchBooks = () => {
 
       <Container>
         <h2>
-          {searchedBooks.length
-            ? `Viewing ${searchedBooks.length} results:`
-            : " 📍Search for a country to begin"}
+          {searchedEvents.length
+            ? `Viewing ${searchedEvents.length} results:`
+            : " 📍Search for a event to begin"}
         </h2>
         <CardColumns>
-          {searchedBooks.map((book) => {
+          {searchedEvents.map((event) => {
             return (
-              <Card key={book.bookId} border="dark">
-                {book.image ? (
+              <Card key={event.eventId} border="dark">
+                {event.image ? (
                   <Card.Img
-                    src={book.image}
-                    alt={`The cover for ${book.title}`}
+                    src={event.image}
+                    alt={`The cover for ${event.title}`}
                     variant="top"
                   />
                 ) : null}
                 <Card.Body>
-                  <Card.Title>{book.title}</Card.Title>
-                  <p className="small">Authors: {book.authors}</p>
-                  <Card.Text>{book.description}</Card.Text>
+                  <Card.Title>{event.title}</Card.Title>
+                  <p className="small">Authors: {event.authors}</p>
+                  <Card.Text>{event.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
-                      disabled={savedBookIds?.some(
-                        (savedId) => savedId === book.bookId
+                      disabled={savedEventIds?.some(
+                        (savedId) => savedId === event.eventId
                       )}
                       className="btn-block btn-info"
-                      onClick={() => handleSaveBook(book.bookId)}
+                      onClick={() => handleSaveEvent(event.eventId)}
                     >
-                      {savedBookIds?.some((savedId) => savedId === book.bookId)
-                        ? "Country Already Saved!"
-                        : "Save This Country!"}
+                      {savedEventIds?.some(
+                        (savedId) => savedId === event.eventId
+                      )
+                        ? "Evfent Already Saved!"
+                        : "Save This Event!"}
                     </Button>
                   )}
                 </Card.Body>
@@ -159,4 +162,4 @@ const SearchBooks = () => {
   );
 };
 
-export default SearchBooks;
+export default SearchEvents;

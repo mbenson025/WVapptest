@@ -15,12 +15,10 @@ import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import { Earth } from "./components/earth";
 
-import SearchBooks from "./pages/SearchBooks";
-import SavedBooks from "./pages/SavedBooks";
-import SearchEvents from "./pages/SearchEvents";
-import SavedEvents from "./pages/SavedEvents";
+import SearchEvents from "./pages/searchEvents";
+import SavedEvents from "./pages/savedEvents";
 import Navbar from "./components/Navbar";
-import topSection from "./components/topSection/index.js";
+// import topSection from "./components/topSection/index.js";
 
 const CanvasContainer = styled.div`
   width: 100%;
@@ -59,10 +57,10 @@ function App() {
           <>
             <Navbar />
             <Routes>
-              <Route path="/" element={<SearchBooks />} />
-              <Route path="/saved" element={<SavedBooks />} />
+              <Route path="/" element={<SearchEvents />} />
+              <Route path="/saved" element={<savedEvents />} />
               <Route path="/events" element={<SearchEvents />} />
-              <Route path="/savedEvents" element={<SavedEvents />} />
+              <Route path="/savedEvents" element={<savedEvents />} />
               <Route
                 path="*"
                 element={<h1 className="display-2">Wrong page!</h1>}
