@@ -1,15 +1,15 @@
 // see SignupForm.js for comments
 
-import React, { useState, useEffect } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import React, { useState, useEffect } from 'react';
+import { Form, Button, Alert } from 'react-bootstrap';
 
-import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "../utils/mutations";
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../utils/mutations';
 
-import Auth from "../utils/auth";
+import Auth from '../utils/auth';
 
 const LoginForm = () => {
-  const [userFormData, setUserFormData] = useState({ email: "", password: "" });
+  const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
@@ -50,8 +50,8 @@ const LoginForm = () => {
 
     // clear form values
     setUserFormData({
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     });
   };
 

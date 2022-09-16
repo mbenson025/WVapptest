@@ -6,21 +6,10 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      savedEvents {
-        eventId
-        authors
+      SavedMoments {
         image
         description
         title
-        link
-      }
-      savedEvents {
-        eventId
-        location
-        header
-        summary
-        lattitude
-        longitude
         link
       }
     }

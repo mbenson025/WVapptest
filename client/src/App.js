@@ -11,14 +11,16 @@ import { setContext } from "@apollo/client/link/context";
 // import './App.css';
 import "./index.css";
 import styled from "styled-components";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import { Earth } from "./components/earth";
 
+import SearchMoments from "./pages/SearchMoments";
+import SavedMoments from "./pages/SavedMoments";
 import Navbar from "./components/Navbar";
-import SearchEvents from "./pages/SearchEvents";
-import SavedEvents from "./pages/SavedEvents";
-// import topSection from "./components/topSection/index.js";
+import topSection from "./components/topSection/index.js";
+import AppNavbar from "./components/Navbar";
 
 const CanvasContainer = styled.div`
   width: 100%;
@@ -55,12 +57,10 @@ function App() {
       <ApolloProvider client={client}>
         <Router>
           <>
-            <Navbar />
+            <AppNavbar />
             <Routes>
-              <Route path="/" element={<SearchEvents />} />
-              <Route path="/saved" element={<savedEvents />} />
-              <Route path="/events" element={<SearchEvents />} />
-              <Route path="/savedEvents" element={<SavedEvents />} />
+              <Route path="/" element={<SearchMoments />} />
+              <Route path="/saved" element={<SavedMoments />} />
               <Route
                 path="*"
                 element={<h1 className="display-2">Wrong page!</h1>}
@@ -70,9 +70,7 @@ function App() {
         </Router>
       </ApolloProvider>
       <Canvas>
-        <Suspense fallback={null}>
-          <Earth />
-        </Suspense>
+        <Earth />
       </Canvas>
     </CanvasContainer>
   );

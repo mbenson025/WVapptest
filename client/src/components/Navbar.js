@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Modal, Tab } from "react-bootstrap";
 import SignUpForm from "./SignupForm";
 import LoginForm from "./LoginForm";
-
 import Auth from "../utils/auth";
 
 const AppNavbar = () => {
+
   // set modal display state
   const [showModal, setShowModal] = useState(false);
 
@@ -21,19 +21,22 @@ const AppNavbar = () => {
           <Navbar.Collapse id="navbar">
             <Nav className="ml-auto">
               <Nav.Link as={Link} to="/">
-                Search For events
+                About
               </Nav.Link>
-              {/* if user is logged in show saved events and logout */}
+              <Nav.Link onClick={() => setShowModal(true)}>
+                Log In
+              </Nav.Link>
+              {/* if user is logged in show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>
                   <Nav.Link as={Link} to="/saved">
-                    See Your events
+                    See Your event
                   </Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
                 <Nav.Link onClick={() => setShowModal(true)}>
-                  Login/Sign Up
+                  Sign Up
                 </Nav.Link>
               )}
             </Nav>

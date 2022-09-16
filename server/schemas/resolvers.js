@@ -40,11 +40,11 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    saveEvent: async (parent, { eventData }, context) => {
+    saveMoment: async (parent, { momentData }, context) => {
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: { savedEvents: eventData } },
+          { $push: { SavedMoments: momentData } },
           { new: true }
         );
 
@@ -53,11 +53,11 @@ const resolvers = {
 
       throw new AuthenticationError("You need to be logged in!");
     },
-    removeevent: async (parent, { eventId }, context) => {
+    removeMoment: async (parent, { momentId }, context) => {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedEvents: { eventId } } },
+          { $pull: { SavedMoments: { momentId } } },
           { new: true }
         );
 

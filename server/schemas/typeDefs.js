@@ -5,16 +5,26 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String
-    eventCount: Int
-    savedEvents: [Event]
+    momentCount: Int
+    savedMoment: [Moment]
+  }
+
+  type Moment {
+    momentId: ID!
+    summary: String
+    link: String
+    header: String!
+    location: String!
+    latitude: Number
+    longitude: Number
   }
 
   type Events {
     eventId: ID!
     location: String
     date: [String]
-    longitude: [String]
-    latitude: [String]
+    longitude: Number
+    latitude: Number
     summary: String
     link: String
     header: String!
@@ -25,13 +35,13 @@ const typeDefs = gql`
     user: User
   }
 
-  input EventInput {
-    location: [String]
-    eventName: [String]
-    description: String!
-    eventId: String!
+  input MomentInput {
+    summary: String
     link: String
-    title: String!
+    header: String!
+    location: String!
+    latitude: Number
+    longitude: Number
   }
 
   type Query {
@@ -41,8 +51,8 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    saveEvent(eventData: EventInput!): User
-    removeEvent(eventId: ID!): User
+    saveMoment(momentData: MomentInput!): User
+    removeMoment(momentId: ID!): User
   }
 `;
 

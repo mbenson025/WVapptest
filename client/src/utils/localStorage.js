@@ -1,32 +1,32 @@
-export const getSavedEventIds = () => {
-  const savedEventIds = localStorage.getItem("saved_events")
-    ? JSON.parse(localStorage.getItem("saved_events"))
+export const getSavedmomentIds = () => {
+  const savedmomentIds = localStorage.getItem("saved_moments")
+    ? JSON.parse(localStorage.getItem("saved_moments"))
     : [];
 
-  return savedEventIds;
+  return savedmomentIds;
 };
 
-export const saveEventIds = (eventIdArr) => {
-  if (eventIdArr.length) {
-    localStorage.setItem("saved_events", JSON.stringify(eventIdArr));
+export const saveMomentIds = (momentIdArr) => {
+  if (momentIdArr.length) {
+    localStorage.setItem("saved_moments", JSON.stringify(momentIdArr));
   } else {
-    localStorage.removeItem("saved_events");
+    localStorage.removeItem("saved_moments");
   }
 };
 
-export const removeEventId = (eventId) => {
-  const savedEventIds = localStorage.getItem("saved_events")
-    ? JSON.parse(localStorage.getItem("saved_events"))
+export const removemomentId = (momentId) => {
+  const savedmomentIds = localStorage.getItem("saved_moments")
+    ? JSON.parse(localStorage.getItem("saved_moments"))
     : null;
 
-  if (!savedEventIds) {
+  if (!savedmomentIds) {
     return false;
   }
 
-  const updatedSavedEventIds = savedEventIds?.filter(
-    (savedEventId) => savedEventId !== eventId
+  const updatedSavedmomentIds = savedmomentIds?.filter(
+    (savedmomentId) => savedmomentId !== momentId
   );
-  localStorage.setItem("saved_events", JSON.stringify(updatedSavedEventIds));
+  localStorage.setItem("saved_moments", JSON.stringify(updatedSavedmomentIds));
 
   return true;
 };

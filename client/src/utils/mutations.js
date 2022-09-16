@@ -24,32 +24,75 @@ export const ADD_USER = gql`
   }
 `;
 
-export const SAVE_EVENT = gql`
-  mutation saveEvent($eventData: eventInput!) {
-    saveEvent(eventData: $eventData) {
-      eventId
-        location
-        header
-        summary
-        lattitude
-        longitude
-        link
-      }
-    }
-  }
-`;
+// export const SAVE_MOMENT = gql`
+//   mutation saveMoment($momentData: MomentInput!) {
+//     saveMoment(momentData: $momentData) {
+//       _id
+//       username
+//       email
+//       SavedMoments {
+//         momentId
+//         authors
+//         image
+//         description
+//         title
+//         link
+//       }
+//     }
+//   }
+// `;
 
-export const REMOVE_EVENT = gql`
-  mutation removeEvent($eventId: ID!) {
-    removeEvent(eventId: $eventId) {
-        eventId
+export const SAVE_MOMENT = gql`
+//   mutation saveMoment($momentData: MomentInput!) {
+//     saveMoment(momentData: $momentData) {
+  _id
+      username
+      email
+//       SavedMoments {
+//         momentId
+        authors
+        image
+        description
+        title
+        link
+//       }
+//     }
+//   }
+// `;
+
+// export const REMOVE_MOMENT = gql`
+//   mutation removeMoment($momentId: ID!) {
+//     removeMoment(momentId: $momentId) {
+//       _id
+//       username
+//       email
+//       SavedMoments {
+//         momentId
+//         authors
+//         image
+//         description
+//         title
+//         link
+//       }
+//     }
+//   }
+// `;
+
+export const REMOVE_MOMENT = gql`
+//   mutation removeMoment($momentId: ID!) {
+//     removeMoment(momentId: $momentId) {
+//       _id
+//       username
+//       email
+//       SavedMoments {
+//         momentId
         location
         header
         summary
         lattitude
         longitude
         link
-      }
-    }
-  }
-`;
+//       }
+//     }
+//   }
+// `;

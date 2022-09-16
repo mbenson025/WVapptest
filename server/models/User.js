@@ -1,9 +1,8 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
 
-// import schema from event.js
-const eventSchema = require("./Event");
-const eventsSchema = require("./Events");
+// import schema from moment.js
+const momentSchema = require("./Moment");
 
 const userSchema = new Schema(
   {
@@ -22,8 +21,8 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    // set savedEvents to be an array of data that adheres to the eventSchema
-    savedEvents: [eventsSchema],
+    // set SavedMoments to be an array of data that adheres to the momentSchema
+    SavedMoments: [momentSchema],
   },
   // set this to use virtual below
   {
@@ -48,8 +47,9 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-userSchema.virtual("eventCount").get(function () {
-  return this.savedEvents.length;
+// when we query a user, we'll also get another field called `momentCount` with the number of saved moments we have
+userSchema.virtual("momentCount").get(function () {
+  return this.SavedMoments.length;
 });
 
 const User = model("User", userSchema);

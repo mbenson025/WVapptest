@@ -1,8 +1,30 @@
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
+const mongoose = require("mongoose");
 const path = require("path");
 const { authMiddleware } = require("./utils/auth");
-const mongoose = require("mongoose");
+
+mongoose.connect(
+  `mongodb+srv://FinalProject:worldview@worldview.hf9necs.mongodb.net/?retryWrites=true&w=majority`
+);
+// .then(() => {
+//   console.log("MongoDB connected successfully");
+// })
+// .error(() => {
+//   console.error("Error while connecting to MongoDB");
+// });
+
+mongoose.connect(
+  `mongodb+srv://${process.env.mongoUserName}:${process.env.mongoUserPassword}@cluster0-yhukr.mongodb.net/${process.env.mongoDatabase}?retryWrites=true&w=majority`
+);
+then(() => {
+  app.listen({ port: 3000 }, () => {
+    console.log("Your Apollo Server is running on port 3000");
+  });
+});
+error(() => {
+  console.error("Error while connecting to MongoDB");
+});
 
 require("dotenv").config();
 
